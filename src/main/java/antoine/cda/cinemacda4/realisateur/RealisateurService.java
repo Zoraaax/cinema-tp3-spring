@@ -18,14 +18,20 @@ public class RealisateurService {
         this.filmService = filmService;
     }
 
-    public List<Realisateur> findAll() {
-        return realisateurRepository.findAll();
-    }
-
+    /**
+     * Ajoute un realisateur
+     * @param realisateur
+     * @return le realisateur ajouté
+     */
     public Realisateur saveRealisateur(Realisateur realisateur) {
         return realisateurRepository.save(realisateur);
     }
 
+    /**
+     * Trouve un realisateur par son id
+     * @param id
+     * @return le realisateur avec l'id
+     */
     public Realisateur findRealisateurById(Integer id) {
         return realisateurRepository.findById(id)
                 .orElseThrow(
@@ -36,15 +42,29 @@ public class RealisateurService {
                 );
     }
 
+    /**
+     * Supprime un realisateur
+     * @param id
+     */
     public void deleteRealisateurById(Integer id) {
         Realisateur realisateur = this.findRealisateurById(id);
         realisateurRepository.delete(realisateur);
     }
 
+    /**
+     * Met à jour un realisateur
+     * @param realisateur
+     * @return le realisateur mis à jour
+     */
     public Realisateur updateRealisateur(Realisateur realisateur) {
         return realisateurRepository.save(realisateur);
     }
 
+    /**
+     * Trouve un realisateur par son nom
+     * @param nom
+     * @return le realisateur avec le nom
+     */
     public Realisateur findRealisateurByNom(String nom) {
         return realisateurRepository.findByNom(nom)
                 .orElseThrow(
@@ -55,6 +75,10 @@ public class RealisateurService {
                 );
     }
 
+    /**
+     * Trouve tous les realisateurs
+     * @return tous les realisateurs
+     */
     public List<Realisateur> findAllRealisateur() {
         return realisateurRepository.findAll();
     }
