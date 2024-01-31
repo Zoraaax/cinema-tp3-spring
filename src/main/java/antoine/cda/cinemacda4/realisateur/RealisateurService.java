@@ -1,5 +1,6 @@
 package antoine.cda.cinemacda4.realisateur;
 
+import antoine.cda.cinemacda4.film.FilmService;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -10,9 +11,11 @@ import java.util.List;
 @Service
 public class RealisateurService {
     private final RealisateurRepository realisateurRepository;
+    private final FilmService filmService;
 
-    public RealisateurService(RealisateurRepository realisateurRepository) {
+    public RealisateurService(RealisateurRepository realisateurRepository, FilmService filmService) {
         this.realisateurRepository = realisateurRepository;
+        this.filmService = filmService;
     }
 
     public List<Realisateur> findAll() {

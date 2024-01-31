@@ -11,7 +11,7 @@ import java.util.List;
 public class FilmCompletDto {
     private Integer id;
     private String titre;
-    private LocalDate date;
+    private LocalDate dateSortie;
     private int duree;
     private String synopsis;
     private Realisateur realisateur;

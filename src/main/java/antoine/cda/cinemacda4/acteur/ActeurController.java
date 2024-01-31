@@ -1,6 +1,7 @@
 package antoine.cda.cinemacda4.acteur;
 
-import antoine.cda.cinemacda4.acteur.dto.ActeurReduitDto;
+import antoine.cda.cinemacda4.acteur.dto.ActeurAvecFilmReduitDto;
+import antoine.cda.cinemacda4.film.dto.ActeurSansFilmDto;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,9 +19,9 @@ public class ActeurController {
     }
 
     @GetMapping
-    public List<ActeurReduitDto> findAllActeur() {
+    public List<ActeurSansFilmDto> findAllActeur() {
         return acteurService.findAllActeur().stream().map(
-                acteur -> objectMapper.convertValue(acteur, ActeurReduitDto.class)
+                acteur -> objectMapper.convertValue(acteur, ActeurSansFilmDto.class)
         ).toList();
     }
 
@@ -30,9 +31,10 @@ public class ActeurController {
     }
 
     @GetMapping("/{id}")
+    public ActeurAvecFilmReduitDto findActeurById(@PathVariable Integer id) {
+        Acteur acteur = acteurService.findActeurById(id);
 
-    public Acteur findActeurById(@PathVariable Integer id) {
-        return acteurService.findActeurById(id);
+        return objectMapper.convertValue(acteur, ActeurAvecFilmReduitDto.class);
     }
 
     @DeleteMapping("/{id}")

@@ -28,7 +28,7 @@ public class ActeurService {
         acteurRepository.delete(acteur);
     }
 
-    Acteur findActeurById(Integer id) {
+    public Acteur findActeurById(Integer id) {
         return (Acteur) acteurRepository.findActeurById(id)
                 .orElseThrow(
                         () -> new ResponseStatusException(

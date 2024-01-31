@@ -1,5 +1,8 @@
 package antoine.cda.cinemacda4.realisateur;
 
+import antoine.cda.cinemacda4.realisateur.dto.FilmParRealisateurDto;
+import antoine.cda.cinemacda4.realisateur.dto.RealisateurAvecFilmDto;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,9 +11,11 @@ import java.util.List;
 @RequestMapping("/realisateurs")
 public class RealisateurController {
     private final RealisateurService realisateurService;
+    private final ObjectMapper objectMapper;
 
-    public RealisateurController(RealisateurService realisateurService) {
+    public RealisateurController(RealisateurService realisateurService, ObjectMapper objectMapper) {
         this.realisateurService = realisateurService;
+        this.objectMapper = objectMapper;
     }
 
     @GetMapping
@@ -21,11 +26,6 @@ public class RealisateurController {
     @PostMapping
     public Realisateur saveRealisateur(@RequestBody Realisateur realisateur) {
         return realisateurService.saveRealisateur(realisateur);
-    }
-
-    @GetMapping("/{id}")
-    public Realisateur findRealisateurById(@PathVariable Integer id) {
-        return realisateurService.findRealisateurById(id);
     }
 
     @DeleteMapping("/{id}")
@@ -43,5 +43,16 @@ public class RealisateurController {
         return realisateurService.findRealisateurByNom(nom);
     }
 
+    @GetMapping("/{id}")
+    public RealisateurAvecFilmDto findRealisateurById(@PathVariable Integer id) {
+        Realisateur realisateur = realisateurService.findRealisateurById(id);
+        return objectMapper.convertValue(realisateur, RealisateurAvecFilmDto.class);
+    }
+
+    @GetMapping("/{id}/films")
+    public FilmParRealisateurDto findRealisateurByIdWithFilms(@PathVariable Integer id) {
+        Realisateur realisateur = realisateurService.findRealisateurById(id);
+        return objectMapper.convertValue(realisateur, FilmParRealisateurDto.class);
+    }
 }
 

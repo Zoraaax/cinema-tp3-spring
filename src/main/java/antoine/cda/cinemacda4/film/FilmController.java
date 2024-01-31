@@ -1,7 +1,10 @@
 package antoine.cda.cinemacda4.film;
 
+import antoine.cda.cinemacda4.acteur.dto.ActeurReduitDto;
+import antoine.cda.cinemacda4.film.dto.ActeurSansFilmDto;
 import antoine.cda.cinemacda4.film.dto.FilmCompletDto;
 import antoine.cda.cinemacda4.film.dto.FilmReduitDto;
+import antoine.cda.cinemacda4.realisateur.Realisateur;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.web.bind.annotation.*;
 
@@ -52,5 +55,24 @@ public class FilmController {
     @GetMapping("/search") // /film/search?titre=toto
     public Film findByTitre(@RequestParam String titre) {
         return filmService.findByTitre(titre);
+    }
+
+    @GetMapping("/{id}/acteur")
+    public List<ActeurReduitDto> findActeurByFilm(@PathVariable Integer id) {
+        return filmService.findActeurByFilm(id).stream().map(
+                acteur -> objectMapper.convertValue(acteur, ActeurReduitDto.class)
+        ).toList();
+    }
+
+    @GetMapping("/{id}/realisateur")
+    public Realisateur findRealisateurByFilm(@PathVariable Integer id) {
+        return filmService.findRealisateurByFilm(id);
+    }
+
+    @PostMapping("/{id}/acteurs")
+    public FilmCompletDto addActeurToFilm(@PathVariable Integer id, @RequestBody ActeurSansFilmDto acteur) {
+        Film film = filmService.addActeurToFilm(id, acteur.getId());
+
+        return objectMapper.convertValue(film, FilmCompletDto.class);
     }
 }

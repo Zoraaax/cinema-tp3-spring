@@ -30,8 +30,6 @@ public class Acteur {
     @Column(nullable = false)
     private String prenom;
 
-    @ManyToMany(
-            mappedBy = "acteurs"
-    )
+    @ManyToMany
     private List<Film> films = new ArrayList<>();
 }
